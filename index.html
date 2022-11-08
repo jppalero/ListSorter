@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/normal.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Pablo Operator</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-center">
+        <h5>Welcome To Pablo's List Sorter</h5>
+      </div>
+    </nav>
+    <main>
+      <section>
+        <form>
+          <h3>Enter List of Numbers</h3>
+          <div class="form-row">
+            <label for="name"> Enter List Seprated by Commas (e.g 1,5,3,9,2) </label>
+            <input type="text" name="name" id="name" class="form-input" autocomplete="false"/>
+            <small class="form-alert"></small>
+          </div>
+          <button type="submit" class="block submit-btn">Sort</button>
+        </form>
+        <div class="result"></div>
+      </section>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // submit form
+      const btn = document.querySelector('.submit-btn');
+      const input = document.querySelector('.form-input');
+      const formAlert = document.querySelector('.form-alert');
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault(); //cancels operation if any failure
+        try {
+            var listValues = input.value.split(",").map((x) => parseInt(x));
+            listValues = listValues.sort(function (a, b) {  return a - b;  });
+            var result = document.querySelector('.result');
+            result.innerHTML = `Result: ${listValues}`;
+        } catch (error) {
+          //console.log(error);
+          formAlert.textContent = error.response.data.msg
+        }
+        input.value = '';
+      })
+    </script>
+  </body>
+</html>
